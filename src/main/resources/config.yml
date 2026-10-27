@@ -1,0 +1,151 @@
+# ChunkClaim – Konfiguration
+# Nach Änderungen im Spiel: /chunk admin reload
+# Alle Zahlen und Texte lassen sich hier ändern, ohne den Code anzufassen.
+
+claims:
+  # Maximale Anzahl Chunks pro Spieler
+  max-per-player: 16
+  # Nur in diesen Welten darf geclaimt werden (Ordnername der Welt)
+  allowed-worlds:
+    - world
+
+prices:
+  # Bezahlmittel (Minecraft-Item-Name), kommt direkt aus dem Inventar
+  currency: DIAMOND
+  # Der n-te Chunk eines Spielers kostet den Preis der ersten Stufe, in der n <= up-to gilt.
+  # Über der letzten Stufe gilt weiter deren Preis.
+  tiers:
+    - up-to: 4
+      price: 32
+    - up-to: 8
+      price: 64
+    - up-to: 16
+      price: 128
+  # Beim Freigeben gibt es diesen Prozentsatz des bezahlten Preises zurück
+  refund-percent: 50
+  # Admins mit aktivem Bypass zahlen nichts
+  free-for-admins: false
+
+# Was Fremde in einem neu geclaimten Chunk dürfen (true = erlaubt)
+defaults:
+  break: false
+  place: false
+  interact: false
+
+protection:
+  # Explosionen (Creeper, TNT) zerstören keine Blöcke in geclaimten Chunks
+  explosions: true
+
+admin:
+  # true = Admins (Permission chunkclaim.admin, standardmäßig OPs) umgehen den Schutz automatisch.
+  # Zum Testen als normaler Spieler: /chunk admin bypass disable
+  bypass-by-default: true
+
+notify:
+  # Meldung, wenn ein Fremder einen geclaimten Chunk betritt
+  on-enter: true
+
+sounds:
+  volume: 1.0
+  # Sound-Namen wie im Spiel (leer lassen = kein Sound)
+  deny: "entity.villager.no"
+  enter: "block.note_block.chime"
+  claim: "entity.player.levelup"
+  unclaim: "entity.experience_orb.pickup"
+
+messages:
+  # Texte im MiniMessage-Format: <red>, <gold>, <bold>, <gray> ...
+  # Platzhalter wie <owner> oder <price> nicht verändern.
+  prefix: "<dark_gray>[<aqua>Chunks<dark_gray>] <gray>"
+  only-players: "<red>Dieser Befehl geht nur im Spiel."
+  no-permission: "<red>Dafür hast du keine Berechtigung."
+  not-claimed: "<red>Dieser Chunk ist nicht geclaimt."
+  not-owner: "<red>Dieser Chunk gehört dir nicht."
+
+  # Wo die Meldungen erscheinen: ACTIONBAR (über der Hotbar), TITLE (Bildschirmmitte) oder CHAT
+  display:
+    deny: ACTIONBAR
+    enter: ACTIONBAR
+
+  deny:
+    break: "<dark_red>✖ <red>Du kannst hier nicht abbauen – dieser Chunk gehört dir nicht."
+    place: "<dark_red>✖ <red>Du kannst hier nicht bauen – dieser Chunk gehört dir nicht."
+    interact: "<dark_red>✖ <red>Du kannst hier nichts benutzen – dieser Chunk gehört dir nicht."
+
+  enter:
+    foreign: "<gold>⚑ <yellow>Du betrittst den Chunk von <white><owner></white>."
+
+  state:
+    allowed: "<green>erlaubt"
+    denied: "<red>gesperrt"
+
+  flag-names:
+    break: "Abbauen"
+    place: "Bauen"
+    interact: "Benutzen"
+
+  claim:
+    title: "<green><bold>Chunk geclaimt"
+    subtitle: "<gray>(<x> | <z>) <dark_gray>• <yellow>-<price> Dias"
+    success: "<green>Du hast den Chunk <white>(<x>, <z>)</white> geclaimt. <gray>Bezahlt: <yellow><price> Dias</yellow> <dark_gray>(<owned>/<max>)"
+    already-yours: "<yellow>Dieser Chunk gehört schon dir."
+    already-claimed: "<red>Dieser Chunk ist schon geclaimt."
+    limit-reached: "<red>Du hast schon die maximale Anzahl von <white><max></white> Chunks."
+    not-enough: "<red>Dafür brauchst du <yellow><price> Dias</yellow> im Inventar. <gray>Du hast <white><have></white>."
+    world: "<red>In dieser Welt kann man keine Chunks claimen."
+
+  unclaim:
+    success: "<green>Chunk <white>(<x>, <z>)</white> freigegeben. <gray>Zurück: <yellow><refund> Dias</yellow>"
+    use-admin: "<yellow>Das ist nicht dein Chunk. Als Admin: <white>/chunk admin unclaim"
+
+  set:
+    usage: "<red>Benutzung: <white>/chunk set [break|place|interact] [enable|disable] [all]"
+    success: "<green>Fremde dürfen hier jetzt <white><flag></white>: <state>"
+    success-all: "<green>Fremde dürfen jetzt auf <white><count></white> Chunks <white><flag></white>: <state>"
+
+  trust:
+    usage: "<red>Benutzung: <white>/chunk trust [Spieler] [all] <gray>bzw. <white>/chunk untrust [Spieler] [all]"
+    added: "<green><white><player></white> hat jetzt Zugriff auf diesen Chunk."
+    added-all: "<green><white><player></white> hat jetzt Zugriff auf <white><count></white> deiner Chunks."
+    removed: "<green><white><player></white> hat keinen Zugriff mehr auf diesen Chunk."
+    removed-all: "<green><white><player></white> hat keinen Zugriff mehr auf <white><count></white> deiner Chunks."
+    not-found: "<red>Spieler <white><player></white> nicht gefunden. Er muss schon einmal auf dem Server gewesen sein."
+    not-trusted: "<red><white><player></white> hat hier keinen Zugriff."
+    self: "<red>Du bist schon der Besitzer."
+
+  info:
+    header: "<dark_gray>━━━ <aqua>Chunk <white><x></white>, <white><z></white> <dark_gray>━━━"
+    free: "<green>Dieser Chunk ist frei. <gray>Preis für dich: <yellow><price> Dias</yellow>"
+    not-claimable: "<red>In dieser Welt kann man keine Chunks claimen."
+    owner: "<gray>Besitzer: <white><owner>"
+    flag: "<gray>Fremde – <flag>: <state>"
+    access: "<gray>Zugriff: <white><players>"
+    access-none: "<gray>Zugriff: <white>nur der Besitzer"
+
+  list:
+    header: "<aqua>Deine Chunks <dark_gray>(<count>/<max>)"
+    entry: "<gray>• <white><x>, <z> <dark_gray>(<world>)"
+    empty: "<yellow>Du hast noch keine Chunks. <gray>Stell dich auf einen freien Chunk und nutze <white>/chunk claim"
+
+  admin:
+    usage: "<red>Benutzung: <white>/chunk admin [unclaim|bypass|reload]"
+    bypass-usage: "<red>Benutzung: <white>/chunk admin bypass [enable|disable]"
+    unclaim: "<green>Chunk <white>(<x>, <z>)</white> von <white><owner></white> gelöscht."
+    bypass-on: "<green>Bypass aktiv: Du darfst überall bauen."
+    bypass-off: "<yellow>Bypass aus: Du wirst wie ein normaler Spieler behandelt."
+    reload: "<green>Konfiguration neu geladen."
+
+  help:
+    header: "<aqua><bold>ChunkClaim</bold> <gray>– Befehle"
+    lines:
+      - "<yellow>/chunk claim <gray>– Chunk claimen, auf dem du stehst"
+      - "<yellow>/chunk unclaim <gray>– Chunk freigeben (Teil des Preises kommt zurück)"
+      - "<yellow>/chunk info <gray>– Besitzer, Einstellungen und Zugriff"
+      - "<yellow>/chunk list <gray>– deine Chunks"
+      - "<yellow>/chunk set [break|place|interact] [enable|disable] [all] <gray>– was Fremde dürfen"
+      - "<yellow>/chunk trust [Spieler] [all] <gray>– Zugriff geben"
+      - "<yellow>/chunk untrust [Spieler] [all] <gray>– Zugriff entziehen"
+    admin-lines:
+      - "<red>/chunk admin unclaim <gray>– Chunk ohne Rückzahlung löschen"
+      - "<red>/chunk admin bypass [enable|disable] <gray>– Schutz umgehen"
+      - "<red>/chunk admin reload <gray>– Konfiguration neu laden"
